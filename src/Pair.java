@@ -1,5 +1,6 @@
 public class Pair extends Domino{
-    private Domino lat1, lat2;
+    private Domino lat1;
+    private Domino lat2;
     public Pair(int half){
         this.half1 = half;
         this.half2 = half;
@@ -9,6 +10,22 @@ public class Pair extends Domino{
         this.side2 = null;
         this.lat1 = null;
         this.lat2 = null;
-        this.flip = false;
+        this.rotated = false;
+    }
+
+    public Domino getLat1() {
+        return lat1;
+    }
+
+    public Domino getLat2() {
+        return lat2;
+    }
+
+    public void setLat1(Domino l){
+        this.lat1 = l;
+    }
+
+    public void setLat2(Domino l){
+        this.lat2 = l;
     }
 }

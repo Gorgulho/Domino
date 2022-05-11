@@ -1,8 +1,8 @@
-public class Domino {
+public class Domino implements Comparable<Domino>{
     protected int x, y;
     protected int half1, half2;
     protected Domino side1, side2;
-    protected boolean flip;
+    protected boolean rotated;
 
     public int getHalf1() {
         return half1;
@@ -12,8 +12,12 @@ public class Domino {
         return half2;
     }
 
-    public void flip(){
+    public void rotate(){
+        this.rotated = !this.rotated;
+    }
 
+    public boolean isRotated(){
+        return this.rotated;
     }
 
     public void setX(int x) {
@@ -24,5 +28,8 @@ public class Domino {
         this.y = y;
     }
 
-
+    @Override
+    public int compareTo(Domino o) {
+        return 0;
+    }
 }

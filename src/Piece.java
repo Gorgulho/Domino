@@ -7,7 +7,7 @@ public class Piece extends Domino{
         this.y = 0;
         this.side1 = null;
         this.side2 = null;
-        this.flip = false;
+        this.rotated = false;
     }
 
     public void switchSides(){
