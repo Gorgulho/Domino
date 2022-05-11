@@ -2,7 +2,7 @@ public class Board {
 
     private final Domino firstDomino;
 
-    public Board(){
+    public Board(Domino first){
         this.firstDomino = new Pair(6);
     }
 
