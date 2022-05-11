@@ -9,4 +9,8 @@ public class Piece extends Domino{
         this.side2 = null;
         this.flip = false;
     }
+
+    public void switchSides(){
+
+    }
 }
