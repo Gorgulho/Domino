@@ -32,4 +32,9 @@ public class Domino implements Comparable<Domino>{
     public int compareTo(Domino o) {
         return 0;
     }
+
+    @Override
+    public String toString() {
+        return "<" + this.half1 + "|" + this.half2 + ">";
+    }
 }

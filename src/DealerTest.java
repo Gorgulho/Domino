@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DealerTest {
 
     @Test
-    void giveHand() {
+    void giveHand() throws NoMorePiecesToGive {
         Dealer dl = new Dealer();
 
         assertEquals(7, dl.giveHand().size());
