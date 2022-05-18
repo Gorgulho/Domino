@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,6 +13,6 @@ class DealerTest {
         dl.giveHand();
         dl.giveHand();
         dl.giveHand();
-        assertThrows(NullPointerException.class, dl::giveHand);
+        assertThrows(NoMorePiecesToGive.class, (Executable) dl.giveHand());
     }
 }

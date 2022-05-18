@@ -1,7 +1,6 @@
 public class Domino implements Comparable<Domino>{
     protected int x, y;
     protected int half1, half2;
-    protected Domino side1, side2;
     protected boolean rotated;
 
     public int getHalf1() {

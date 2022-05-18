@@ -5,8 +5,6 @@ public class Piece extends Domino{
         this.half2 = h2;
         this.x = 0;
         this.y = 0;
-        this.side1 = null;
-        this.side2 = null;
         this.rotated = false;
     }
 
