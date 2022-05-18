@@ -1,5 +1,13 @@
+import java.util.LinkedList;
+import java.util.List;
+
 public class Board {
 
+    private final Node firstDomino;
+    private final int width;
+    private final int height;
+    private List<Domino> dominos;
+    //private Domino firstDomino = new Domino(6, 6, 0, 0);
     private static class Node {
         private Domino side1;
         private Domino side2;
@@ -7,6 +15,7 @@ public class Board {
         private Domino lat2;
         private final Domino piece;
         private boolean isPair;
+
 
         /**
          *
@@ -26,14 +35,19 @@ public class Board {
             return isPair;
         }
     }
-    private final Node firstDomino;
+
 
     /**
      *
-     * @param first
+     * @param first //firstDomino
      */
-    public Board(Domino first){
+    public Board(Domino first /*Domino firstDomino*/, int width, int height){
+        //this.firstDomino = firstDomino;
         this.firstDomino = new Node(first);
+        this.width = width;
+        this.height = height;
+        this.dominos = new LinkedList<Domino>();
+
     }
 
     /**

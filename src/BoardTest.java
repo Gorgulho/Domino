@@ -5,11 +5,11 @@ class BoardTest {
     @Test
     void getFirstDomino(){
         Domino first = new Pair(6);
-        Board a = new Board(first);
+        Board a = new Board(first, 20, 20);
         assertEquals(6, a.getFirstDomino().getHalf1());
 
         assertThrows(IllegalArgumentException.class, () -> {
-            new Board(new Piece(5, 4));
+            new Board(new Piece(5, 4), 20, 20);
         });
     }
 
