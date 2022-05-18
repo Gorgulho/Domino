@@ -7,6 +7,11 @@ public class Board {
         private Domino lat2;
         private final Domino piece;
         private boolean isPair;
+
+        /**
+         *
+         * @param piece
+         */
         public Node(Domino piece){
             this.piece = piece;
             if (this.piece instanceof Pair){
@@ -23,11 +28,36 @@ public class Board {
     }
     private final Node firstDomino;
 
+    /**
+     *
+     * @param first
+     */
     public Board(Domino first){
         this.firstDomino = new Node(first);
     }
 
+    /**
+     *
+     * @return
+     */
     public Domino getFirstDomino() {
         return firstDomino.piece;
+    }
+
+    /**
+     *
+     * @param d
+     */
+    public void addDomino(Domino d){
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

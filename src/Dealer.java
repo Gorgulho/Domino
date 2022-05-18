@@ -4,11 +4,17 @@ import java.util.Random;
 public class Dealer {
     private final LinkedList<Domino> allDominos;
 
+    /**
+     *
+     */
     public Dealer(){
         this.allDominos = new LinkedList<>();
         setDominos();
     }
 
+    /**
+     *
+     */
     private void setDominos(){
         for (int i = 0; i <= 6; i++){
             for (int j = 0; j <= i; j++){
@@ -21,6 +27,11 @@ public class Dealer {
         }
     }
 
+    /**
+     *
+     * @return
+     * @throws NoMorePiecesToGive
+     */
     public LinkedList<Domino> giveHand() throws NoMorePiecesToGive {
         try{
             Random rand = new Random();
