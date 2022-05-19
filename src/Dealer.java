@@ -39,8 +39,8 @@ public class Dealer {
             players[1] = two;
             players[2] = three;
             players[3] = four;
-            players[a].hand.add(allDominos.get(41));
-            this.allDominos.remove(allDominos.get(41));
+            players[a].hand.add(allDominos.get(47));
+            this.allDominos.remove(allDominos.get(47));
             Random rand = new Random();
             for(int i = 0; i < 7; i++){
                 players[a].hand.add(this.allDominos.remove(rand.nextInt(this.allDominos.size())));

@@ -9,7 +9,7 @@ public class Client {
                 allDominos.add(new Domino(i, j));
             }
         }
-        Board b = new Board(allDominos.get(41), 56, 84);
+        Board b = new Board(allDominos.get(47), 56, 84);
         Player one = new Player();
         Player two = new Player();
         Player three = new Player();
