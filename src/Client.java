@@ -4,11 +4,17 @@ import java.util.LinkedList;
 public class Client {
     public static void main(String[] args) throws NoMorePiecesToGive {
         LinkedList<Domino> allDominos = new LinkedList<>();
+        //são criadas todas as peças de dominos e guardadas na linkedList. Esta linkedList será enviada ao dealer.
         for (int i = 0; i <= 6; i++){
             for (int j = 0; j <= i; j++){
                 allDominos.add(new Domino(i, j));
             }
         }
+        //tabuleiro criado e a peça presente em all.Dominos.get(27) é a 6|6 que será a firstDomino.
+        // o tamanho 56 por 84 é o máximo possivel e previne situações em que todas as peças estão na horizontal
+        // ou em que todas as peças estão na vertical.
+        //os players são criados sendo que o player p será o user. O dealer é criado e são enviadas todas as peças
+        // na linha 24, está o comando que faz com que as peças sejam distribuidas (na classe dealer).
         Board b = new Board(allDominos.get(27), 56, 84);
         Player one = new Player();
         Player two = new Player();
