@@ -35,8 +35,11 @@ public class Domino implements Comparable<Domino>{
     }
 
     @Override
-    public int compareTo(Domino o) {
-        return 0;
+    public int compareTo(Domino p) {
+            if((p.getHalf1() == this.getHalf1()) && (p.getHalf2() == this.getHalf2())) {
+                return 1;
+            }
+            return 0;
     }
 
 

@@ -9,8 +9,8 @@ public class Player {
      * @return
      */
     public int calculatePoints(){
-        for(int i = 0; i < hand.size(); i++){
-            this.points += (hand[i].getHalf1() + hand[i].getHalf2());
+        for(int i = 0; i < hand.size(); i++) {
+            this.points += hand.get(i).sumPoints();
         }
         return this.points;
     }
@@ -29,6 +29,9 @@ public class Player {
      * @return
      */
     public boolean hasPiece(Domino p){
+        for(int i = 0; i < hand.size(); i++){
+            if(p.compareTo(hand.get(i)) == 1){return true;}
+        }
         return false;
     }
 
