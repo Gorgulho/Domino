@@ -3,8 +3,8 @@ import java.util.List;
 
 public class Board {
     private final Node firstDomino;
-    private int width = 56; //2*28
-    private int height = 84; //3*28
+    private int width; //2*28
+    private int height; //3*28
     private List<Domino> dominos;
     private static class Node{
         private Domino side1;
@@ -53,7 +53,6 @@ public class Board {
      * @return
      */
     @Override
-    public String toString() {
-        return super.toString();
+    public String toString() {return super.toString();
     }
 }

@@ -39,7 +39,8 @@ public class Player {
      *
      * @return
      */
-    public boolean canPlay(){
+    public boolean canPlay(Domino a){
+        if(this.hasPiece(a)) return true;
         return false;
     }
 }
