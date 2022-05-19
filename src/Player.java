@@ -9,7 +9,10 @@ public class Player {
      * @return
      */
     public int calculatePoints(){
-        return 0;
+        for(int i = 0; i < hand.size(); i++){
+            this.points += (hand[i].getHalf1() + hand[i].getHalf2());
+        }
+        return this.points;
     }
 
     /**
