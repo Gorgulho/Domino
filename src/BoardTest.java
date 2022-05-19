@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 class BoardTest {
     @Test
     void getFirstDomino(){
-        Domino first = new Pair(6);
+        Domino first = new Domino(6, 6);
         Board a = new Board(first, 20, 20);
         assertEquals(6, a.getFirstDomino().getHalf1());
 

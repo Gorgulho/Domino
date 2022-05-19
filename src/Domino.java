@@ -2,13 +2,16 @@ public class Domino implements Comparable<Domino>{
     protected int x, y;
     protected int half1, half2;
     protected boolean rotated;
+    private final boolean isPair;
 
-    public Domino(int half1, int half2, int x, int y){
+    public Domino(int half1, int half2){
+        this.isPair = half1 == half2;
+
         this.half1 = half1;
         this.half2 = half2;
         this.rotated = false;
-        this.x = x;
-        this.y = y;
+        this.x = 0;
+        this.y = 0;
     }
 
     public int getHalf1() {return this.half1;}
@@ -45,5 +48,9 @@ public class Domino implements Comparable<Domino>{
 
     public int sumPoints(){
         return (this.half1 + this.half2);
+    }
+
+    public boolean isPair() {
+        return isPair;
     }
 }

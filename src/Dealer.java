@@ -10,6 +10,9 @@ public class Dealer {
     public Dealer(){
         this.allDominos = new LinkedList<>();
         setDominos();
+        for (Domino dm : allDominos){
+            System.out.println(dm.getClass().getName() + dm.isPair() + dm);
+        }
     }
 
     /**
@@ -18,11 +21,7 @@ public class Dealer {
     private void setDominos(){
         for (int i = 0; i <= 6; i++){
             for (int j = 0; j <= i; j++){
-                if (i == j){
-                    this.allDominos.add(new Pair(i));
-                } else {
-                    this.allDominos.add((new Piece(i, j)));
-                }
+                this.allDominos.add(new Domino(i, j));
             }
         }
     }
