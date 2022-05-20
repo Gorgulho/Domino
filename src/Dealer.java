@@ -38,31 +38,18 @@ public class Dealer {
     public LinkedList<Domino>[] giveHand() throws NoMorePiecesToGive {
         try{
             Random rand = new Random();
-            LinkedList<Domino>[] list = new LinkedList[4];
+            LinkedList<Domino>[] hands = new LinkedList[4];
             for (int i = 0; i < 4; i++){
                 LinkedList<Domino> hand = new LinkedList<>();
                 for (int j = 0; j <=6; j++){
                     hand.add(this.allDominos.remove(rand.nextInt(this.allDominos.size())));
                 }
-                list[i] = hand;
+                hands[i] = hand;
             }
 
-            return list;
+            return hands;
         } catch (RuntimeException e) {
             throw new NoMorePiecesToGive("No more hand's can be given\n" + e);
-        }
-    }
-
-    public static void main(String[] args) {
-        LinkedList[] list = new LinkedList[5];
-        for (int i = 0; i < 5; i++) {
-            if (list[i] == null) {
-                list[i] = new LinkedList();
-                for (int j = 0; j < i + 1; j++) {
-                    list[i].add(j);
-                }
-            }
-            System.out.print(list[i]);
         }
     }
 }

@@ -12,7 +12,6 @@ public class Board {
         private Domino lat1;
         private Domino lat2;
         private final Domino piece;
-        private boolean isPair;
 
         /**
          *
