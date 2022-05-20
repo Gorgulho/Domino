@@ -72,4 +72,10 @@ public class Domino implements Comparable<Domino>{
     public boolean isPair() {
         return isPair;
     }
+
+    public void flip(){
+        int temp = half1;
+        half1 = half2;
+        half2 = temp;
+    }
 }
