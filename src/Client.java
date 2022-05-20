@@ -16,10 +16,10 @@ public class Client {
         //os players são criados sendo que o player p será o user. O dealer é criado e são enviadas todas as peças
         // na linha 24, está o comando que faz com que as peças sejam distribuidas (na classe dealer).
         Board b = new Board(allDominos.get(27), 56, 84);
-        Player one = new Player();
-        Player two = new Player();
-        Player three = new Player();
-        Player p = new Player();
+        Player one = new Player(); //bot
+        Player two = new Player();  //bot
+        Player three = new Player();    //bot
+        Player p = new Player();    //person
         Dealer d = new Dealer(allDominos);
         d.giveHand(one, two, three, p);
     }
