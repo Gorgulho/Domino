@@ -25,10 +25,10 @@ public class Client {
 
         Dealer d = new Dealer(createDominos());
         LinkedList<Domino>[] hands = d.giveHand();
-        Player one = new Bot(hands[0]); //bot
-        Player two = new Bot(hands[1]);  //bot
-        Player three = new Bot(hands[2]);    //bot
-        Player p = new Person(hands[3]);    //person
+        Player one = new Bot(hands[0]);
+        Player two = new Bot(hands[1]);
+        Player three = new Bot(hands[2]);
+        Player p = new Person(hands[3]);
         Board b = new Board(new Domino(6, 6), 56, 84);
 
     }
