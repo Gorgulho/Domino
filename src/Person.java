@@ -4,12 +4,10 @@ public class Person extends Player{
 
     /**
      *
-     * @param hand
+     * @param hand - LinkedList with the 7 Dominos for the Person to use
      */
     public Person(LinkedList<Domino> hand){
-        this.hand = hand;
-        this.points = 0;
-        System.out.println(this.hand);
+        super(hand);
     }
 
     public void play(){

@@ -6,6 +6,15 @@ public class Player {
 
     /**
      *
+     * @param hand - LinkedList with the 7 Dominos for the player to use
+     */
+    public Player(LinkedList<Domino> hand) {
+        this.hand = hand;
+        this.points = 0;
+    }
+
+    /**
+     *
      * @return
      */
     public int calculatePoints(){

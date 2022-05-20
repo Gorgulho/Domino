@@ -4,12 +4,10 @@ public class Bot extends Player{
 
     /**
      *
-     * @param hand
+     * @param hand - LinkedList with the 7 Dominos for the Bot to use
      */
     public Bot(LinkedList<Domino> hand){
-        this.hand = hand;
-        this.points = 0;
-        System.out.println(this.hand);
+        super(hand);
     }
 
     /**
