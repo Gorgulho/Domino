@@ -18,8 +18,8 @@ public class Player {
      * @return
      */
     public int calculatePoints(){
-        for(int i = 0; i < hand.size(); i++) {
-            this.points += hand.get(i).sumPoints();
+        for (Domino domino : hand) {
+            this.points += domino.sumPoints();
         }
         return this.points;
     }
@@ -38,8 +38,10 @@ public class Player {
      * @return
      */
     public boolean hasPiece(Domino p){
-        for(int i = 0; i < hand.size(); i++){
-            if(p.compareTo(hand.get(i)) == 1){return true;}
+        for (Domino domino : hand) {
+            if (p.compareTo(domino) > 0) {
+                return true;
+            }
         }
         return false;
     }
@@ -49,7 +51,17 @@ public class Player {
      * @return
      */
     public boolean canPlay(Domino a){
-        if(this.hasPiece(a)) return true;
-        return false;
+        return this.hasPiece(a);
+    }
+
+    public Domino givePiece(int h1, int h2){
+        Domino piece = new Domino(h1, h2);
+        int i = 0;
+        for(Domino dm: this.hand){
+            if (dm.compareTo(piece) > 0) return this.hand.remove(i);
+            else i++;
+        }
+
+        return null;
     }
 }

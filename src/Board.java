@@ -2,7 +2,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Board {
-    private final Node firstDomino;
+    private Node firstDomino;
     private int width; //2*28
     private int height; //3*28
     private List<Domino> dominos;
@@ -20,6 +20,17 @@ public class Board {
         public Node(Domino piece){
             this.piece = piece;
         }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "side1=" + side1 +
+                    ", side2=" + side2 +
+                    ", lat1=" + lat1 +
+                    ", lat2=" + lat2 +
+                    ", piece=" + piece +
+                    '}';
+        }
     }
 
     /**
@@ -27,11 +38,12 @@ public class Board {
      * @param first //firstDomino
      */
     public Board(Domino first, int width, int height){
-        this.firstDomino = new Node(first);
-        this.width = width;
-        this.height = height;
-        this.dominos = new LinkedList<Domino>();
-
+        if (first.compareTo(new Domino(6, 6)) > 0) {
+            this.firstDomino = new Node(first);
+            this.width = width;
+            this.height = height;
+            this.dominos = new LinkedList<Domino>();
+        } else System.exit(0);
     }
 
     /**
@@ -53,6 +65,12 @@ public class Board {
      * @return
      */
     @Override
-    public String toString() {return super.toString();
+    public String toString() {
+        return "Board{" +
+                "firstDomino=" + firstDomino +
+                ", width=" + width +
+                ", height=" + height +
+                ", dominos=" + dominos +
+                '}';
     }
 }
