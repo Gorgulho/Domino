@@ -1,27 +1,36 @@
-import org.junit.platform.engine.support.descriptor.FileSystemSource;
-
 import java.util.LinkedList;
 public class Client {
-    public static void main(String[] args) throws NoMorePiecesToGive {
-        LinkedList<Domino> allDominos = new LinkedList<>();
-        //são criadas todas as peças de dominos e guardadas na linkedList. Esta linkedList será enviada ao dealer.
+    public static LinkedList<Domino> createDominos(){
+        LinkedList<Domino> pieces = new LinkedList<>();
         for (int i = 0; i <= 6; i++){
+            for (int j = 0; j <= i; j++){
+                pieces.add(new Domino(i, j));
+            }
+        }
+        return pieces;
+    }
+
+    public static void main(String[] args) throws NoMorePiecesToGive {
+        //são criadas todas as peças de dominos e guardadas na linkedList. Esta linkedList será enviada ao dealer.
+        /*for (int i = 0; i <= 6; i++){
             for (int j = 0; j <= i; j++){
                 allDominos.add(new Domino(i, j));
             }
-        }
+        }*/
         //tabuleiro criado e a peça presente em all.Dominos.get(27) é a 6|6 que será a firstDomino.
         // o tamanho 56 por 84 é o máximo possivel e previne situações em que todas as peças estão na horizontal
         // ou em que todas as peças estão na vertical.
         //os players são criados sendo que o player p será o user. O dealer é criado e são enviadas todas as peças
         // na linha 24, está o comando que faz com que as peças sejam distribuidas (na classe dealer).
-        Board b = new Board(allDominos.get(27), 56, 84);
-        Player one = new Player(); //bot
-        Player two = new Player();  //bot
-        Player three = new Player();    //bot
-        Player p = new Player();    //person
-        Dealer d = new Dealer(allDominos);
-        d.giveHand(one, two, three, p);
+
+        Dealer d = new Dealer(createDominos());
+        LinkedList<Domino>[] hands = d.giveHand();
+        Player one = new Bot(hands[0]); //bot
+        Player two = new Bot(hands[1]);  //bot
+        Player three = new Bot(hands[2]);    //bot
+        Player p = new Person(hands[3]);    //person
+        Board b = new Board(new Domino(6, 6), 56, 84);
+
     }
 }
 /* Domino zeroZero = new Domino(0, 0);

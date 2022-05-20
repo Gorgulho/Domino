@@ -9,6 +9,7 @@ public class Bot extends Player{
     public Bot(LinkedList<Domino> hand){
         this.hand = hand;
         this.points = 0;
+        System.out.println(this.hand);
     }
 
     /**

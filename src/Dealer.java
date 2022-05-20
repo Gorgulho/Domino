@@ -34,31 +34,35 @@ public class Dealer {
     //O a terá um valor entre [0;3] e será esse o valor do indice do array de players que ficará com a peça 6|6
     //como este player já terá uma peça atribuida, só temos de atribuir mais seis peças e por isso fiz à parte.
     //seguidamente são atribuidas peças aos outros players.
-    public void giveHand(Player one, Player two, Player three, Player four) throws NoMorePiecesToGive {
+
+    public LinkedList<Domino>[] giveHand() throws NoMorePiecesToGive {
         try{
-            Random sixsix = new Random();
-            int a = sixsix.nextInt(0, 3);
-            Player [] players = new Player[4];
-            players[0] = one;
-            players[1] = two;
-            players[2] = three;
-            players[3] = four;
-            players[a].hand.add(allDominos.get(27));
-            this.allDominos.remove(allDominos.get(27));
             Random rand = new Random();
-            for(int i = 0; i < 7; i++){
-                players[a].hand.add(this.allDominos.remove(rand.nextInt(this.allDominos.size())));
+            LinkedList<Domino>[] list = new LinkedList[4];
+            for (int i = 0; i < 4; i++){
+                LinkedList<Domino> hand = new LinkedList<>();
+                for (int j = 0; j <=6; j++){
+                    hand.add(this.allDominos.remove(rand.nextInt(this.allDominos.size())));
+                }
+                list[i] = hand;
             }
 
-            for(int i = 0; i < 4; i++){
-                if(i != a){
-                    for (int j = 0; j < 8; j++){
-                        players[i].hand.add(this.allDominos.remove(rand.nextInt(this.allDominos.size())));
-                    }
-                }
-            }
+            return list;
         } catch (RuntimeException e) {
             throw new NoMorePiecesToGive("No more hand's can be given\n" + e);
+        }
+    }
+
+    public static void main(String[] args) {
+        LinkedList[] list = new LinkedList[5];
+        for (int i = 0; i < 5; i++) {
+            if (list[i] == null) {
+                list[i] = new LinkedList();
+                for (int j = 0; j < i + 1; j++) {
+                    list[i].add(j);
+                }
+            }
+            System.out.print(list[i]);
         }
     }
 }
