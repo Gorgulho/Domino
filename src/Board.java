@@ -6,6 +6,9 @@ public class Board {
     private int width; //2*28
     private int height; //3*28
     private List<Domino> dominos;
+
+    private LinkedList<Domino> corners;
+
     private static class Node{
         private Domino side1;
         private Domino side2;
@@ -35,14 +38,17 @@ public class Board {
 
     /**
      *
-     * @param first //firstDomino
+     * @param first - first Domino, in case <6|6>
+     * @param width - width limit for the board
+     * @param height - height limit for the board
      */
     public Board(Domino first, int width, int height){
         if (first.compareTo(new Domino(6, 6)) > 0) {
             this.firstDomino = new Node(first);
             this.width = width;
             this.height = height;
-            this.dominos = new LinkedList<Domino>();
+            this.dominos = new LinkedList<Domino>(); //Tomás isto serve para quê??
+            this.corners = new LinkedList<>();
         } else System.exit(0);
     }
 
@@ -54,9 +60,10 @@ public class Board {
 
     /**
      *
-     * @param d
+     * @param piece
+     * @param Corner
      */
-    public void addDomino(Domino d){
+    public void addDominoToCorner(Domino piece, Domino Corner){
 
     }
 
@@ -72,5 +79,9 @@ public class Board {
                 ", height=" + height +
                 ", dominos=" + dominos +
                 '}';
+    }
+
+    public LinkedList<Domino> getCorners() {
+        return corners;
     }
 }
