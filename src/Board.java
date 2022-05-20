@@ -32,6 +32,7 @@ public class Board {
         this.width = width;
         this.height = height;
         this.dominos = new LinkedList<Domino>();
+
     }
 
     /**
