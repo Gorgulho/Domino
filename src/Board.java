@@ -6,6 +6,7 @@ public class Board {
     private int width; //2*28
     private int height; //3*28
     private List<Domino> dominos;
+    private  LinkedList<Domino> corners;
     private static class Node{
         private Domino side1;
         private Domino side2;
@@ -32,6 +33,7 @@ public class Board {
         this.width = width;
         this.height = height;
         this.dominos = new LinkedList<Domino>();
+        this.corners = new LinkedList<>();
     }
 
     /**
@@ -42,9 +44,10 @@ public class Board {
 
     /**
      *
-     * @param d
+     * @param piece
+     * @param Corner
      */
-    public void addDomino(Domino d){
+    public void addDominoToCorner(Domino piece, Domino Corner){
 
     }
 
