@@ -3,7 +3,6 @@ import java.util.LinkedList;
 public class Player {
     protected LinkedList<Domino> hand;
     protected int points;
-    private int numberOfPieces;
 
     /**
      *
@@ -12,7 +11,6 @@ public class Player {
     public Player(LinkedList<Domino> hand) {
         this.hand = hand;
         this.points = 0;
-        this.numberOfPieces = this.hand.size();
     }
 
     /**
@@ -26,7 +24,7 @@ public class Player {
         return this.points;
     }
     public boolean hasPieces(){
-        return this.numberOfPieces != 0;
+        return !hand.isEmpty();
     }
     /**
      *
