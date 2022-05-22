@@ -6,14 +6,15 @@ public class Client {
         LinkedList<Domino> pieces = new LinkedList<>();
         for (int i = 0; i <= 6; i++){
             for (int j = 0; j <= i; j++){
-                pieces.add(new Domino(i, j));
+                if (i == j) pieces.add(new Pair(i));
+                else pieces.add(new Piece(i, j));
             }
         }
         return pieces;
     }
 
     private static int findSixSix(Player[] pl){
-        Domino sixSix = new Domino(6, 6);
+        Domino sixSix = new Pair(6);
         for (int i = 0; i < pl.length; i++){
             if (pl[i].hasPiece(sixSix)) return i;
         }
@@ -35,16 +36,15 @@ public class Client {
         int playerIndice = findSixSix(players);
 
         Board b = new Board(players[playerIndice].givePiece(6, 6), 56, 84);
-        //System.out.println(b);
 
         for(Player p : players){
             System.out.println(p.getHand() + p.getClass().getName());
         }
-        Domino a = new Domino(7, 7);
+        /*Domino a = new Domino(7, 7);
         b.fillPrint();
         b.printTurn(a, 15, 15);
         while(players[0].hasPieces() || players[1].hasPieces() || players[2].hasPieces() || players[3].hasPieces()){
             b.printTurn(new Domino(7, 7), 15, 15);
-        }
+        }*/
     }
 }

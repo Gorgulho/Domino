@@ -1,12 +1,12 @@
 public class Domino implements Comparable<Domino>{
-    private int x, y;
-    private int half1, half2;
-    private boolean rotated;
-    private boolean isPair;
+    protected int x, y;
+    protected int half1, half2;
+    protected boolean rotated;
+    //private boolean isPair;
 
     public Domino(int half1, int half2){
         if ((half1 >= 0 && half1 <= 6) && (half2 >= 0 && half2 <= 6)) {
-            this.isPair = half1 == half2;
+            //this.isPair = half1 == half2;
 
             this.half1 = half1;
             this.half2 = half2;
@@ -69,13 +69,7 @@ public class Domino implements Comparable<Domino>{
         return (this.half1 + this.half2);
     }
 
-    public boolean isPair() {
+    /*public boolean isPair() {
         return isPair;
-    }
-
-    public void flip(){
-        int temp = half1;
-        half1 = half2;
-        half2 = temp;
-    }
+    }*/
 }

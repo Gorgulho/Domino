@@ -10,13 +10,11 @@ public class Dealer {
         this.allDominos = allDominos;
         //setDominos();
         for (Domino dm : allDominos){
-            System.out.println(dm.getClass().getName() + dm.isPair() + dm);
+            System.out.println(dm.getClass().getName() + dm);
         }
     }
 
-    /**
-     *
-     */
+
     /*private void setDominos(){
         for (int i = 0; i <= 6; i++){
             for (int j = 0; j <= i; j++){
@@ -27,10 +25,10 @@ public class Dealer {
 */
     /**
      *
-     * @return
+     * @return an array with 4 LinkedList's with 7 pieces each.
+     *         Each LinkList it's a hand for each player.
      * @throws NoMorePiecesToGive
      */
-
     public LinkedList<Domino>[] giveHand() throws NoMorePiecesToGive {
         try{
             Random rand = new Random();

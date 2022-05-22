@@ -1,20 +1,20 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Board {
     private final Node firstDomino;
     private int width; //2*28
     private int height; //3*28
     private List<Domino> dominos;
-    private  LinkedList<Domino> corners;
+    private  LinkedList<Node> corners;
     private String print[][];
     private static class Node{
-        private Domino side1;
-        private Domino side2;
-        private Domino lat1;
-        private Domino lat2;
+        private Node side1;
+        private Node side2;
+        private Node lat1;
+        private Node lat2;
         private final Domino piece;
-        private boolean isPair;
 
         /**
          *
@@ -22,6 +22,14 @@ public class Board {
          */
         public Node(Domino piece){
             this.piece = piece;
+        }
+
+        public boolean isFull(){
+            if(this.piece instanceof Pair){
+                return side1 != null && side2 != null && lat1 != null && lat2 != null;
+            } else {
+                return side1 != null && side2 != null;
+            }
         }
     }
 
@@ -35,6 +43,7 @@ public class Board {
         this.height = height;
         this.dominos = new LinkedList<Domino>();
         this.corners = new LinkedList<>();
+        this.corners.add(this.firstDomino);
         this.print = new String [30][30];
 
     }
@@ -66,10 +75,15 @@ public class Board {
     /**
      *
      * @param piece
-     * @param Corner
+     * @param corner
      */
-    public void addDominoToCorner(Domino piece, Domino Corner){
+    public void addDominoToCorner(Domino piece, Domino corner){
+        Node c = getNode(corner);
+        if (c == null) return;
 
+        if (c.piece instanceof Pair){
+            if(c.lat1 == null) c.lat1 = new Node(piece);
+        }
     }
 
     /**
@@ -78,5 +92,24 @@ public class Board {
      */
     @Override
     public String toString() {return super.toString();
+    }
+
+    public Iterable<Domino> leftSide() {
+        LinkedList<Domino> itr = new LinkedList<>();
+        sideListGenerator();
+        return itr;
+    }
+
+    private void sideListGenerator(){
+
+    }
+
+    private Node getNode(Domino dm){
+        int i = 0;
+        for(Node nd: this.corners){
+            if (nd.piece.compareTo(dm) > 0) return this.corners.remove(i);
+            else i++;
+        }
+        return null;
     }
 }
