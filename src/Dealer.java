@@ -30,10 +30,6 @@ public class Dealer {
      * @return
      * @throws NoMorePiecesToGive
      */
-    //O dealer recebe os 4 players. O random sixsix é para decidir qual dos players ficará com a peça 6|6.
-    //O a terá um valor entre [0;3] e será esse o valor do indice do array de players que ficará com a peça 6|6
-    //como este player já terá uma peça atribuida, só temos de atribuir mais seis peças e por isso fiz à parte.
-    //seguidamente são atribuidas peças aos outros players.
 
     public LinkedList<Domino>[] giveHand() throws NoMorePiecesToGive {
         try{
