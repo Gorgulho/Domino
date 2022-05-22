@@ -112,4 +112,14 @@ public class Board {
         }
         return null;
     }
+
+    public Iterable<Domino> oQueTuQuiseres(Node n){
+        LinkedList<Domino> dominos = new LinkedList<>();
+        oQueTuQuiseres(n, dominos);
+        return dominos;
+    }
+    private void oQueTuQuiseres(Node n, LinkedList<Domino> list){
+        if(n.side1 != null) oQueTuQuiseres(n.side1,list);
+        list.add(n.piece);
+    }
 }
