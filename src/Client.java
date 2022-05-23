@@ -35,11 +35,18 @@ public class Client {
 
         int playerIndice = findSixSix(players);
 
-        Board b = new Board(players[playerIndice].givePiece(6, 6), 56, 84);
-
+        Board b = new Board(players[playerIndice].givePiece(6, 6));
         for(Player p : players){
             System.out.println(p.getHand() + p.getClass().getName());
         }
+
+        //b.printTurn(new Domino(7, 7), 15, 15);
+        for(int i = playerIndice; i <= 3; i++){
+
+            //novo ciclo
+            if(i == 3) i = 0;
+        }
+
         /*Domino a = new Domino(7, 7);
         b.fillPrint();
         b.printTurn(a, 15, 15);

@@ -37,14 +37,14 @@ public class Board {
      *
      * @param first //firstDomino
      */
-    public Board(Domino first, int width, int height){
+    public Board(Domino first){
         this.firstDomino = new Node(first);
-        this.width = width;
-        this.height = height;
+        this.width = 56;
+        this.height = 84;
         this.dominos = new LinkedList<Domino>();
         this.corners = new LinkedList<>();
         this.corners.add(this.firstDomino);
-        this.print = new String [30][30];
+        //this.print = new String [30][30];
 
     }
 
@@ -52,7 +52,7 @@ public class Board {
      *
      * @return
      */
-    public void fillPrint(){
+    /*public void fillPrint(){
         for(int i = 0; i < print.length; i++){
             for(int j = 0; j < print[i].length; j++){
                 print[i][j] = "   ";
@@ -69,7 +69,7 @@ public class Board {
                 System.out.print(this.print[i][j] + "  ");
             }
         }
-    }
+    }*/
     public Domino getFirstDomino() {return firstDomino.piece;}
 
     /**
