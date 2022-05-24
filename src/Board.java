@@ -101,21 +101,30 @@ public class Board {
             if (c.left == null && s == Side.LEFT){
                 assert c.piece.isPair() || !c.piece.isRotated();
 
-                if (!c.piece.isRotated()){
-                    if (newPiece.piece.isPair()) newPiece.piece.rotate();
-                }
+                if (newPiece.piece.isPair()) newPiece.piece.rotate();
 
                 if (newPiece.piece.getHalf1() == c.piece.getHalf1()) newPiece.piece.flip();
 
                 c.left = newPiece;
                 newPiece.right = c;
+
                 break;
             }else if (c.up == null && s == Side.UP) {
+                assert c.piece.isPair() || c.piece.isRotated();
+
+                if (!newPiece.piece.isPair()) newPiece.piece.rotate();
+
+                if (newPiece.piece.getHalf1() == c.piece.getHalf1()) newPiece.piece.flip();
+
+                c.up = newPiece;
+                newPiece.down = c;
+
                 break;
             } else if (c.right == null && s == Side.RIGHT){
                 assert c.piece.isPair() || !c.piece.isRotated();
                 break;
             } else if (c.down == null && s == Side.DOWN) {
+                assert c.piece.isPair() || c.piece.isRotated();
                 break;
             }
         }
