@@ -10,10 +10,4 @@ class BoardTest {
         assertEquals(6, a.getFirstDomino().getHalf2());
     }
 
-    //@Test
-    /*public void testfirstDomino() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Board(new Domino(5, 4), 56, 84);
-        });*/
-    //}
 }
