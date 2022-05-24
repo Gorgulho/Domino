@@ -122,9 +122,24 @@ public class Board {
                 break;
             } else if (c.right == null && s == Side.RIGHT){
                 assert c.piece.isPair() || !c.piece.isRotated();
+
+                if (newPiece.piece.isPair()) newPiece.piece.rotate();
+
+                if (newPiece.piece.getHalf2() == c.piece.getHalf2()) newPiece.piece.flip();
+
+                c.right = newPiece;
+                newPiece.left = c;
+
                 break;
             } else if (c.down == null && s == Side.DOWN) {
                 assert c.piece.isPair() || c.piece.isRotated();
+
+                if (!newPiece.piece.isPair()) newPiece.piece.rotate();
+
+                if (newPiece.piece.getHalf2() == c.piece.getHalf2()) newPiece.piece.flip();
+
+                c.down = newPiece;
+                newPiece.up = c;
                 break;
             }
         }
