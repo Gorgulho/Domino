@@ -5,18 +5,9 @@ class BoardTest {
     @Test
     void getFirstDomino(){
         Domino first = new Pair(6);
-        Board a = new Board(first, 57, 85);
+        Board a = new Board(first);
         assertEquals(6, a.getFirstDomino().getHalf1());
-
-        /*assertThrows(IllegalArgumentException.class, () -> {
-            new Board(new Domino(5, 4), 56, 84);
-        });*/
+        assertEquals(6, a.getFirstDomino().getHalf2());
     }
 
-    //@Test
-    /*public void testfirstDomino() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Board(new Domino(5, 4), 56, 84);
-        });*/
-    //}
 }
