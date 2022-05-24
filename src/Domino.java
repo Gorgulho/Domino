@@ -43,12 +43,17 @@ public abstract class Domino implements Comparable<Domino>{
         return half1 == half2;
     }
 
-    public void setX(int x) {
+    public void setXY(int x, int y) {
         this.x = x;
+        this.y = y;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public abstract List<Side> canConnect(Domino other);
@@ -76,7 +81,7 @@ public abstract class Domino implements Comparable<Domino>{
      */
     @Override
     public String toString() {
-        return "<" + this.half1 + "|" + this.half2 + ">";
+        return "<" + this.half1 + "|" + this.half2 + ">" + this.isRotated();
     }
 
 

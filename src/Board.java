@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -5,9 +7,11 @@ public class Board {
     private final Node firstDomino;
     private int width; //2*28
     private int height; //3*28
-    private List<Domino> dominos;
+    private ArrayList<Domino> dominos;
     private LinkedList<Node> corners;
-    private String print[][];
+    //private String print[][];
+    private int xMin, xMax;
+    private int yMin, yMax;
 
     private static class Node {
         private Node left;
@@ -32,14 +36,14 @@ public class Board {
             }
         }
 
-        public String toString(Node other) {
-            return "Node{" + "side1=" + (left == other ? "rec" : left) + ", side2=" + (right == other ? "rec" : right) + ", lat1=" + (up == other ? "rec" : up) + ", lat2=" + (down == other ? "rec" : down) + ", piece=" + piece + '}';
+        /*public String toString(Node other) {
+            return "Node{" + "left=" + (left == other ? "rec" : left) + ", right=" + (right == other ? "rec" : right) + ", up=" + (up == other ? "rec" : up) + ", down=" + (down == other ? "rec" : down) + ", piece=" + piece + '}';
         }
 
         @Override
         public String toString() {
-            return "Node{" + "side1=" + (left == null ? "null" : left.toString(this)) + ", side2=" + (right == null ? "nulll" : right.toString(this)) + ", lat1=" + (up == null ? "null" : up.toString(this)) + ", lat2=" + (down == null ? "null" : down.toString(this)) + ", piece=" + piece + '}';
-        }
+            return "Node{" + "left=" + (left == null ? "null" : left.toString(this)) + ", right=" + (right == null ? "nulll" : right.toString(this)) + ", up=" + (up == null ? "null" : up.toString(this)) + ", up=" + (down == null ? "null" : down.toString(this)) + ", piece=" + piece +'}';
+        }*/
     }
 
     /**
@@ -48,35 +52,21 @@ public class Board {
     public Board(Domino first, int width, int height) {
         if (!first.isRotated()) first.rotate();
 
+        first.setXY(0, 1);
+        this.xMin = 0;
+        this.xMax = 1;
+        this.yMin = 0;
+        this.yMax = 3;
+
         this.firstDomino = new Node(first);
         this.width = width;
         this.height = height;
-        this.dominos = new LinkedList<Domino>();
+        this.dominos = new ArrayList<>();
+        this.dominos.add(first);
         this.corners = new LinkedList<>();
         this.corners.add(this.firstDomino);
-        this.print = new String[56][84];
+        //this.print = new String[56][84];
 
-    }
-
-    /**
-     * @return
-     */
-    public void fillPrint() {
-        for (int i = 0; i < print.length; i++) {
-            for (int j = 0; j < print[i].length; j++) {
-                print[i][j] = " ";
-            }
-        }
-    }
-
-    public void printTurn(Domino a, int x, int y) {
-        this.print[x][y] = a.getHalf1() + " " + a.getHalf2();
-        for (int i = 0; i < print.length; i++) {
-            System.out.println();
-            for (int j = 0; j < print[i].length; j++) {
-                System.out.print(this.print[i][j] + "  ");
-            }
-        }
     }
 
     public Domino getFirstDomino() {
@@ -97,16 +87,22 @@ public class Board {
 
         Node newPiece = new Node(piece);
 
-        for (Side s: sides) {
+        for (Side s: sides) {  //TODO: still need to implement the coordinates for the print
             if (c.left == null && s == Side.LEFT){
                 assert c.piece.isPair() || !c.piece.isRotated();
 
                 if (newPiece.piece.isPair()) newPiece.piece.rotate();
-
-                if (newPiece.piece.getHalf1() == c.piece.getHalf1()) newPiece.piece.flip();
+                else if (newPiece.piece.getHalf1() == c.piece.getHalf1()) newPiece.piece.flip();
 
                 c.left = newPiece;
                 newPiece.right = c;
+
+                if (!c.piece.isRotated()){
+                    if (newPiece.piece.isRotated()) newPiece.piece.setXY(c.piece.getX() - 2, c.piece.getY());
+                    else newPiece.piece.setXY(c.piece.getX() - 3, c.piece.getY());
+                } else {
+                    newPiece.piece.setXY(c.piece.getX() - 2, c.piece.getY());
+                }
 
                 break;
             }else if (c.up == null && s == Side.UP) {
@@ -119,16 +115,29 @@ public class Board {
                 c.up = newPiece;
                 newPiece.down = c;
 
+                if (!c.piece.isRotated()){
+                    newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 2);
+                } else {
+                    if (newPiece.piece.isRotated()) newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 3);
+                    else newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 2);
+                }
+
                 break;
             } else if (c.right == null && s == Side.RIGHT){
                 assert c.piece.isPair() || !c.piece.isRotated();
 
                 if (newPiece.piece.isPair()) newPiece.piece.rotate();
-
-                if (newPiece.piece.getHalf2() == c.piece.getHalf2()) newPiece.piece.flip();
+                else if (newPiece.piece.getHalf2() == c.piece.getHalf2()) newPiece.piece.flip();
 
                 c.right = newPiece;
                 newPiece.left = c;
+
+                if (!c.piece.isRotated()){
+                    if (newPiece.piece.isRotated()) newPiece.piece.setXY(c.piece.getX() + 2, c.piece.getY());
+                    else newPiece.piece.setXY(c.piece.getX() + 3, c.piece.getY());
+                } else {
+                    newPiece.piece.setXY(c.piece.getX() + 2, c.piece.getY());
+                }
 
                 break;
             } else if (c.down == null && s == Side.DOWN) {
@@ -140,19 +149,59 @@ public class Board {
 
                 c.down = newPiece;
                 newPiece.up = c;
+
+                if (!c.piece.isRotated()){
+                    newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 2);
+                } else {
+                    if (newPiece.piece.isRotated()) newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 3);
+                    else newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 2);
+                }
+
                 break;
             }
         }
 
-        //TODO: the validation to add again in linked list corners or not
+        this.dominos.add(newPiece.piece);
 
+        if (!c.isFull()) this.corners.add(c);
+        if (!newPiece.isFull()) this.corners.add(newPiece);
+        updateMinMaxCoordinates(newPiece);
     }
 
-    @Override
-    public String toString() {
-        return "Board{" +
-                "firstDomino=" + firstDomino +
-                '}';
+    private void updateMinMaxCoordinates(Node no){
+        int x = no.piece.getX();
+        int y = no.piece.getY();
+
+        if (x < this.xMin) this.xMin = x - 1;
+        if (x > this.xMax) this.xMax = x + 1;
+
+        if (y < this.yMin) this.yMin = y - 1;
+        if (y > this.yMax) this.yMax = y + 1;
+    }
+
+    public void boardState() {
+        String[][] result = new String[this.yMax + Math.abs(this.yMin)][this.xMax + Math.abs(this.xMin)];
+
+        for (Domino dm : this.dominos){
+            if (dm.isRotated()) {
+                result[dm.getY() + Math.abs(this.yMin) - 1][dm.getX() + Math.abs(this.xMin)] = String.valueOf(dm.getHalf1());
+                result[dm.getY() + Math.abs(this.yMin)][dm.getX() + Math.abs(this.xMin)] = "-";
+                result[dm.getY() + Math.abs(this.yMin) + 1][dm.getX() + Math.abs(this.xMin)] = String.valueOf(dm.getHalf2());
+            } else {
+                result[dm.getY() + Math.abs(this.yMin)][dm.getX() + Math.abs(this.xMin) + 1] = String.valueOf(dm.getHalf2());
+                result[dm.getY() + Math.abs(this.yMin)][dm.getX() + Math.abs(this.xMin)] = "|";
+                result[dm.getY() + Math.abs(this.yMin)][dm.getX() + Math.abs(this.xMin) - 1] = String.valueOf(dm.getHalf1());
+            }
+        }
+
+        for (int i = 0; i < this.yMax + Math.abs(this.yMin); i++){
+            for (int j = 0; j < this.xMax + Math.abs(this.xMin); j++){
+                if (result[i][j] == null) System.out.print(' ');
+                else System.out.print(result[i][j]);
+            }
+            System.out.println();
+        }
+
     }
 
     /**

@@ -37,18 +37,18 @@ public class Client {
 
         Board b = new Board(players[playerIndice].givePiece(6, 6), 56, 84);
 
-        for(Player p : players){
+        /*for(Player p : players){
             System.out.println(p.getHand() + p.getClass().getName());
-        }
-        b.addDominoToCorner(new Piece(6, 4), new Pair(6));
-        players[0].play();
-        //System.out.println(b);
-
-        /*Domino a = new Domino(7, 7);
-        b.fillPrint();
-        b.printTurn(a, 15, 15);
-        while(players[0].hasPieces() || players[1].hasPieces() || players[2].hasPieces() || players[3].hasPieces()){
-            b.printTurn(new Domino(7, 7), 15, 15);
         }*/
+
+
+
+        b.boardState();
+        b.addDominoToCorner(new Piece(6, 4), new Pair(6));
+        b.boardState();
+        b.addDominoToCorner(new Piece(4, 5), new Piece(4, 6));
+        b.boardState();
+
+
     }
 }
