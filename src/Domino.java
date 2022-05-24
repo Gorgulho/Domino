@@ -1,9 +1,16 @@
-public class Domino implements Comparable<Domino>{
+import java.util.List;
+
+public abstract class Domino implements Comparable<Domino>{
     protected int x, y;
     protected int half1, half2;
     protected boolean rotated;
     //private boolean isPair;
 
+    /**
+     * By default, rotated is false, witch means, each piece is oriented horizontaly
+     * @param half1 value for half1 of the piece
+     * @param half2 value for half2 of the piece
+     */
     public Domino(int half1, int half2){
         if ((half1 >= 0 && half1 <= 6) && (half2 >= 0 && half2 <= 6)) {
             //this.isPair = half1 == half2;
@@ -32,6 +39,10 @@ public class Domino implements Comparable<Domino>{
         return this.rotated;
     }
 
+    public boolean isPair() {
+        return half1 == half2;
+    }
+
     public void setX(int x) {
         this.x = x;
     }
@@ -39,6 +50,10 @@ public class Domino implements Comparable<Domino>{
     public void setY(int y) {
         this.y = y;
     }
+
+    public abstract List<Side> canConnect(Domino other);
+
+    public abstract void flip();
 
     /**
      *

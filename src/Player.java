@@ -1,6 +1,6 @@
 import java.util.LinkedList;
 
-public class Player {
+public abstract class Player {
     protected LinkedList<Domino> hand;
     protected int points;
 
@@ -57,7 +57,7 @@ public class Player {
     }
 
     public Domino givePiece(int h1, int h2){
-        Domino piece = new Domino(h1, h2);
+        Domino piece = new Piece(h1, h2);
         int i = 0;
         for(Domino dm: this.hand){
             if (dm.compareTo(piece) > 0) return this.hand.remove(i);
@@ -66,4 +66,6 @@ public class Player {
 
         return null;
     }
+
+    public abstract void play();
 }

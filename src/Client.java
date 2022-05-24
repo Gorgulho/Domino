@@ -40,6 +40,10 @@ public class Client {
         for(Player p : players){
             System.out.println(p.getHand() + p.getClass().getName());
         }
+        b.addDominoToCorner(new Piece(6, 4), new Pair(6));
+        players[0].play();
+        //System.out.println(b);
+
         /*Domino a = new Domino(7, 7);
         b.fillPrint();
         b.printTurn(a, 15, 15);
