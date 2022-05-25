@@ -3,6 +3,10 @@ import java.util.List;
 import java.util.Random;
 
 public class Client {
+    /**
+     * Creates all the possible Dominos.
+     * @return a LinkedList<Domino> with all the possible Dominos.
+     */
     private static LinkedList<Domino> createDominos() {
         LinkedList<Domino> pieces = new LinkedList<>();
         for (int i = 0; i <= 6; i++) {
@@ -14,12 +18,22 @@ public class Client {
         return pieces;
     }
 
+    /**
+     * Goes truh all the playes in the array and calculate the points for each player.
+     * @param players Array with the players that we want to calculate the points.
+     */
     private static void calculatePlayersPoints(Player[] players){
         for (Player p : players){
             p.calculatePoints();
         }
     }
 
+    /**
+     * orders all the players in a growing way.
+     * @param players Array with the players.
+     * @param pIndex Index in the players array where the wining player is.
+     * @return Array with the players ordered by the first place to the fourth place.
+     */
     private static Player[] getPodium(Player[] players, int pIndex){
         Player[] podium = new Player[players.length];
         int count = 0;
@@ -33,7 +47,6 @@ public class Client {
         for (int i = 1; i < podium.length; i++){
             int j = i;
             while (j > 0 && podium[j - 1].getPoints() > podium[j].getPoints()) {
-                /*if (podium[i].getPoints() > podium[i + 1].getPoints()){*/
                 Player temp = podium[j - 1];
                 podium[j - 1] = podium[j];
                 podium[j] = temp;
@@ -43,6 +56,11 @@ public class Client {
         return podium;
     }
 
+    /**
+     * Prints the classification board for the players.
+     * @param players Array with the players.
+     * @param pIndex Index in the players array where the wining player is.
+     */
     private static void printResults(Player[] players, int pIndex){
         calculatePlayersPoints(players);
 
@@ -54,6 +72,11 @@ public class Client {
         System.out.println("Quarto " + podium[3]);
     }
 
+    /**
+     * Searches in all the players with of them has the 6|6 piece.
+     * @param pl Array with the players.
+     * @return Index of the player with the piece 6|6, -1 otherwise.
+     */
     private static int findSixSix(Player[] pl) {
         Domino sixSix = new Pair(6);
         for (int i = 0; i < pl.length; i++) {
@@ -62,11 +85,12 @@ public class Client {
         return -1;
     }
 
-    public static void main(String[] args) throws NoMorePiecesToGive {
 
+    public static void main(String[] args) throws NoMorePiecesToGive {
         Dealer d = new Dealer(createDominos());
         LinkedList<Domino>[] hands = d.giveHand();
 
+        //Players creation
         Player[] players = new Player[4];
 
         players[0] = new Bot(hands[0]);      //bot
@@ -76,17 +100,15 @@ public class Client {
 
         int playerIndice = findSixSix(players);
 
+        //Board creation
         Board b = new Board(players[playerIndice++].givePiece(6, 6), 56, 84);
 
         Domino[] piecesToPlay;
 
         LinkedList<Domino> piecesCantPlay = new LinkedList<>();
 
-        /*for (Player p : players) {
-            System.out.println(p.getHand());
-        }*/
-
-        while (players[0].hasPieces() && players[1].hasPieces() && players[2].hasPieces() && players[3].hasPieces()) {
+        //where all the players will play, stops the play if one player gets out of pieces or the board has no more possible corners
+        while (players[0].hasPieces() && players[1].hasPieces() && players[2].hasPieces() && players[3].hasPieces() && b.getCornersDomino().size() != 0) {
             if (playerIndice == 4) playerIndice = 0;
             if (playerIndice == 3) {
                 b.boardState();

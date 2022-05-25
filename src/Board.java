@@ -4,11 +4,10 @@ import java.util.List;
 
 public class Board {
     private final Node firstDomino;
-    private int width; //2*28
-    private int height; //3*28
-    private ArrayList<Domino> dominos;
-    private LinkedList<Node> corners;
-    //private String print[][];
+    private final int width; //2*28
+    private final int height; //3*28
+    private final ArrayList<Domino> dominos;
+    private final LinkedList<Node> corners;
     private int xMin, xMax;
     private int yMin, yMax;
 
@@ -20,12 +19,16 @@ public class Board {
         private final Domino piece;
 
         /**
-         * @param piece
+         * @param piece - The domino to be placed in this Node, the possible connections will depend on the type of the Domino,
          */
         public Node(Domino piece) {
             this.piece = piece;
         }
 
+        /**
+         * Checkes if this Node has all the possible connections are full or not
+         * @return true if all possible connections are full, false otherwise.
+         */
         public boolean isFull() {
             if (this.piece instanceof Pair) {
                 return left != null && right != null && up != null && down != null;
@@ -46,7 +49,10 @@ public class Board {
     }
 
     /**
-     * @param first //firstDomino
+     * Prepares the board to start the game
+     * @param first first piece being assign to the boar
+     * @param width Board width
+     * @param height Board height
      */
     public Board(Domino first, int width, int height) {
         if (!first.isRotated()) first.rotate();
@@ -64,17 +70,24 @@ public class Board {
         this.dominos.add(first);
         this.corners = new LinkedList<>();
         this.corners.add(this.firstDomino);
-        //this.print = new String[56][84];
 
     }
 
+    /**
+     * Returns the Domino assign to the firstDomino of the board
+     * @return first Domino placed in the board
+     */
     public Domino getFirstDomino() {
         return firstDomino.piece;
     }
 
     /**
-     * @param piece
-     * @param corner
+     * Check if the piece is hable to connect on the specific corner, blocking the connection if any colision happens or if the piece is considered impossible to connect.
+     * Updates the corners LinkdList, with contains all the dominos that are corners.
+     * Updates the dominos LinkdList, with contains all the dominos placed in the board.
+     * @param piece - Domino given by the player to be placed in the board.
+     * @param corner - Corner where the piece will attempt to connect.
+     * @return True if the piece was succefully added to the board.
      */
     public boolean addDominoToCorner(Domino piece, Domino corner) {
         boolean canPlace = false;
@@ -197,6 +210,11 @@ public class Board {
         return canPlace;
     }
 
+    /**
+     * Checkes all the possible was the Domino can be placed in the board, and check if it may generat a collision, or not, with any other Domino already placed in the board or with the boundrys of the board.
+     * @param piece - Domino that we are checking if it can be placed or not.
+     * @return true if it detectes any collision, false otherwise.
+     */
     private boolean calculateColision(Domino piece) {
 
         String c1, c2, c3, dm1, dm2, dm3;
@@ -229,6 +247,10 @@ public class Board {
         return false;
     }
 
+    /**
+     * Recives one Node with one Domino, and check if the coordinates assign are higher or lower than the min and max coordinates already stored.
+     * @param no - Node with one Domino to check and update max and min coordinates.
+     */
     private void updateMinMaxCoordinates(Node no) {
         int x = no.piece.getX();
         int y = no.piece.getY();
@@ -240,6 +262,9 @@ public class Board {
         if (y >= this.yMax) this.yMax = y + 2;
     }
 
+    /**
+     * Prints all the Dominos already in the board in their specific places.
+     */
     public void boardState() {
         String[][] result = new String[this.yMax + Math.abs(this.yMin)][this.xMax + Math.abs(this.xMin)];
 
@@ -265,6 +290,10 @@ public class Board {
 
     }
 
+    /**
+     * Generate a LinkedList<Domino> with all the Dominos that are a corner in the board.
+     * @return
+     */
     public LinkedList<Domino> getCornersDomino() {
         LinkedList<Domino> result = new LinkedList<>();
         for (Node n : this.corners) {
@@ -280,7 +309,13 @@ public class Board {
         return result;
     }
 
-    public List<Side> canConectNode(Domino piece, Node corner) {
+    /**
+     * Check if the corner, can create a connection with the piece.
+     * @param piece - Domino we want to check if it's possible to place in the specific corner.
+     * @param corner - Node with the Domino that is already placed in the board.
+     * @return List of Side's with the possible sides where the Domino(piece) can be connected with the corner, null otherwise.
+     */
+    private List<Side> canConectNode(Domino piece, Node corner) {
         List<Side> sidesCorner = corner.piece.canConnect(piece);
 
         List<Side> result = new ArrayList<>();
@@ -314,9 +349,10 @@ public class Board {
     }
 
     /**
-     * @return
+     * Make a search in the corners LinkedList tryins to find the specific corner.
+     * @param dm - Domino that we use has reference to find the Node we want.
+     * @return Node with the Domino we search for, null otherwise.
      */
-
     private Node getNode(Domino dm) {
         int i = 0;
         for (Node nd : this.corners) {

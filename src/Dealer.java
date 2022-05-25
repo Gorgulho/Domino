@@ -2,32 +2,21 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class Dealer {
-    /**
-     *
-     */
     private LinkedList <Domino> allDominos;
+
+    /**
+     * Creates the dealer with all the possible Dominos
+     * @param allDominos - LinkedList<Domino> with all the possible Dominos.
+     */
     public Dealer(LinkedList <Domino> allDominos){
         this.allDominos = allDominos;
-        //setDominos();
-        /*for (Domino dm : allDominos){
-            System.out.println(dm.getClass().getName() + dm);
-        }*/
     }
 
-
-    /*private void setDominos(){
-        for (int i = 0; i <= 6; i++){
-            for (int j = 0; j <= i; j++){
-                this.allDominos.add(new Domino(i, j));
-            }
-        }
-    }
-*/
     /**
      *
      * @return an array with 4 LinkedList's with 7 pieces each.
      *         Each LinkList it's a hand for each player.
-     * @throws NoMorePiecesToGive
+     * @throws NoMorePiecesToGive - If this method is call more than one time, this exception will be trown with the sentence "No more hand's can be given".
      */
     public LinkedList<Domino>[] giveHand() throws NoMorePiecesToGive {
         try{
