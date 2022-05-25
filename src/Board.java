@@ -198,6 +198,13 @@ public class Board {
     }
 
     public boolean calculateColision(Domino piece) {
+        if(piece.isRotated()){
+            if(Math.abs(piece.getX()) > width/2 || Math.abs(piece.getY())+1 > height/2) return true;
+        }
+        else{
+            if(Math.abs(piece.getX())+1 > width/2 || Math.abs(piece.getY()) > height/2) return true;
+        }
+
         String c1, c2, c3, dm1, dm2, dm3;
         if (piece.isRotated()) {
             c1 = piece.getX() + "" + (piece.getY() - 1);
