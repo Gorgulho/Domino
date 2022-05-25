@@ -20,12 +20,6 @@ public class Client {
         }
     }
 
-    private static void arrayShift (Player[] arr, int limit){
-        for (int i = arr.length - 1; i > limit; i--) {
-            arr[i] = arr[i - 1];
-        }
-    }
-
     private static Player[] getPodium(Player[] players, int pIndex){
         Player[] podium = new Player[players.length];
         int count = 0;
