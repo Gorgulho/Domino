@@ -8,18 +8,20 @@ public abstract class Domino implements Comparable<Domino>{
 
     /**
      * By default, rotated is false, witch means, each piece is oriented horizontaly
+     * In case half1 == -1 and half2 == -1, it means we are creating an invalid piece, to block possible plays in the board
      * @param half1 value for half1 of the piece
      * @param half2 value for half2 of the piece
      */
     public Domino(int half1, int half2){
         if ((half1 >= 0 && half1 <= 6) && (half2 >= 0 && half2 <= 6)) {
-            //this.isPair = half1 == half2;
-
             this.half1 = half1;
             this.half2 = half2;
             this.rotated = false;
             this.x = 0;
             this.y = 0;
+        } else if (half1 == -1 && half2 == -1) {
+            this.half1 = half1;
+            this.half2 = half2;
         } else System.exit(0);
     }
 
@@ -88,8 +90,4 @@ public abstract class Domino implements Comparable<Domino>{
     public int sumPoints(){
         return (this.half1 + this.half2);
     }
-
-    /*public boolean isPair() {
-        return isPair;
-    }*/
 }

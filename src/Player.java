@@ -13,15 +13,18 @@ public abstract class Player {
         this.points = 0;
     }
 
+    public int getPoints() {
+        return points;
+    }
+
     /**
      *
      * @return
      */
-    public int calculatePoints(){
+    public void calculatePoints(){
         for (Domino domino : hand) {
             this.points += domino.sumPoints();
         }
-        return this.points;
     }
     public boolean hasPieces(){
         return !hand.isEmpty();
@@ -67,5 +70,16 @@ public abstract class Player {
         return null;
     }
 
+    public void recivePiecesBack(LinkedList<Domino> back){
+        while (!back.isEmpty()){
+            this.hand.add(back.remove());
+        }
+    }
+
     public abstract Domino[] play(LinkedList<Domino> corners);
+
+    @Override
+    public String toString() {
+        return this.getClass().getName() + " com " + this.points + "pontos!";
+    }
 }

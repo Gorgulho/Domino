@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -77,13 +76,15 @@ public class Board {
      * @param piece
      * @param corner
      */
-    public void addDominoToCorner(Domino piece, Domino corner) {
+    public boolean addDominoToCorner(Domino piece, Domino corner) {
+        boolean canPlace = false;
+
         Node c = getNode(corner);
-        if (c == null) return;
+        if (c == null) return false;
 
         List<Side> sides = this.canConectNode(piece, c);
 
-        if (sides == null) return;
+        if (sides == null) return false;
 
         Node newPiece = new Node(piece);
 
@@ -94,9 +95,6 @@ public class Board {
                 if (newPiece.piece.isPair()) newPiece.piece.rotate();
                 else if (newPiece.piece.getHalf1() == c.piece.getHalf1()) newPiece.piece.flip();
 
-                c.left = newPiece;
-                newPiece.right = c;
-
                 if (!c.piece.isRotated()) {
                     if (newPiece.piece.isRotated()) newPiece.piece.setXY(c.piece.getX() - 2, c.piece.getY());
                     else newPiece.piece.setXY(c.piece.getX() - 3, c.piece.getY());
@@ -104,7 +102,14 @@ public class Board {
                     newPiece.piece.setXY(c.piece.getX() - 2, c.piece.getY());
                 }
 
-                break;
+                if (this.calculateColision(newPiece.piece)){
+                    c.left = new Node(new Pair(-1));
+                } else {
+                    c.left = newPiece;
+                    newPiece.right = c;
+                    canPlace = true;
+                    break;
+                }
             } else if (c.up == null && s == Side.UP) {
                 assert c.piece.isPair() || c.piece.isRotated();
 
@@ -112,14 +117,20 @@ public class Board {
 
                 if (newPiece.piece.getHalf1() == c.piece.getHalf1()) newPiece.piece.flip();
 
-                c.up = newPiece;
-                newPiece.down = c;
-
                 if (!c.piece.isRotated()) {
                     newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 2);
                 } else {
                     if (newPiece.piece.isRotated()) newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 3);
                     else newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 2);
+                }
+
+                if (this.calculateColision(newPiece.piece)){
+                    c.up = new Node(new Pair(-1));
+                } else {
+                    c.up = newPiece;
+                    newPiece.down = c;
+                    canPlace = true;
+                    break;
                 }
 
                 break;
@@ -129,14 +140,20 @@ public class Board {
                 if (newPiece.piece.isPair()) newPiece.piece.rotate();
                 else if (newPiece.piece.getHalf2() == c.piece.getHalf2()) newPiece.piece.flip();
 
-                c.right = newPiece;
-                newPiece.left = c;
-
                 if (!c.piece.isRotated()) {
                     if (newPiece.piece.isRotated()) newPiece.piece.setXY(c.piece.getX() + 2, c.piece.getY());
                     else newPiece.piece.setXY(c.piece.getX() + 3, c.piece.getY());
                 } else {
                     newPiece.piece.setXY(c.piece.getX() + 2, c.piece.getY());
+                }
+
+                if (this.calculateColision(newPiece.piece)){
+                    c.right = new Node(new Pair(-1));
+                } else {
+                    c.right = newPiece;
+                    newPiece.left = c;
+                    canPlace = true;
+                    break;
                 }
 
                 break;
@@ -147,9 +164,6 @@ public class Board {
 
                 if (newPiece.piece.getHalf2() == c.piece.getHalf2()) newPiece.piece.flip();
 
-                c.down = newPiece;
-                newPiece.up = c;
-
                 if (!c.piece.isRotated()) {
                     newPiece.piece.setXY(c.piece.getX(), c.piece.getY() + 2);
                 } else {
@@ -157,15 +171,59 @@ public class Board {
                     else newPiece.piece.setXY(c.piece.getX(), c.piece.getY() + 2);
                 }
 
+                if (this.calculateColision(newPiece.piece)){
+                    c.down = new Node(new Pair(-1));
+                } else {
+                    c.down = newPiece;
+                    newPiece.up = c;
+                    canPlace = true;
+                    break;
+                }
+
                 break;
             }
         }
 
-        this.dominos.add(newPiece.piece);
+        if (canPlace) {
+            this.dominos.add(newPiece.piece);
 
+        }
+        updateMinMaxCoordinates(newPiece);
         if (!c.isFull()) this.corners.add(c);
         if (!newPiece.isFull()) this.corners.add(newPiece);
-        updateMinMaxCoordinates(newPiece);
+
+
+
+        return canPlace;
+    }
+
+    public boolean calculateColision(Domino piece) {
+        String c1, c2, c3, dm1, dm2, dm3;
+        if (piece.isRotated()) {
+            c1 = piece.getX() + "" + (piece.getY() - 1);
+            c2 = piece.getX() + "" + piece.getY();
+            c3 = piece.getX() + "" + (piece.getY() + 1);
+        } else {
+            c1 = (piece.getX() + 1) + "" + piece.getY();
+            c2 = piece.getX() + "" + piece.getY();
+            c3 = (piece.getX() - 1) + "" + piece.getY();
+        }
+
+        for (Domino dm : this.dominos) {
+            if (dm.isRotated()) {
+                dm1 = dm.getX() + "" + (dm.getY() - 1);
+                dm2 = dm.getX() + "" + dm.getY();
+                dm3 = dm.getX() + "" + (dm.getY() + 1);
+            } else {
+                dm1 = (dm.getX() + 1) + "" + dm.getY();
+                dm2 = dm.getX() + "" + dm.getY();
+                dm3 = (dm.getX() - 1) + "" + dm.getY();
+            }
+            if (c1.equals(dm1) || c1.equals(dm2) || c1.equals(dm3)) return true;
+            if (c2.equals(dm1) || c2.equals(dm2) || c2.equals(dm3)) return true;
+            if (c3.equals(dm1) || c3.equals(dm2) || c3.equals(dm3)) return true;
+        }
+        return false;
     }
 
     private void updateMinMaxCoordinates(Node no) {
@@ -180,7 +238,7 @@ public class Board {
     }
 
     public void boardState() {
-        String[][] result = new String[this.yMax + Math.abs(this.yMin) ][this.xMax + Math.abs(this.xMin) ];
+        String[][] result = new String[this.yMax + Math.abs(this.yMin)][this.xMax + Math.abs(this.xMin)];
 
         for (Domino dm : this.dominos) {
             if (dm.isRotated()) {
@@ -212,7 +270,7 @@ public class Board {
         return result;
     }
 
-    public List<Side> canConectNode(Domino piece, Domino corner){
+    public List<Side> canConectNode(Domino piece, Domino corner) {
         Node c = this.getNode(corner);
         List<Side> result = this.canConectNode(piece, c);
         this.corners.add(c);
@@ -233,7 +291,7 @@ public class Board {
                     result.add(Side.LEFT);
                 }
             } else if (corner.up == null && s == Side.UP) {
-                if (corner.piece.getHalf1() == piece.getHalf1() || corner.piece.getHalf1() == piece.getHalf2()){
+                if (corner.piece.getHalf1() == piece.getHalf1() || corner.piece.getHalf1() == piece.getHalf2()) {
                     result.add(Side.UP);
                 }
             } else if (corner.right == null && s == Side.RIGHT) {
@@ -243,7 +301,7 @@ public class Board {
                     result.add(Side.RIGHT);
                 }
             } else if (corner.down == null && s == Side.DOWN) {
-                if (corner.piece.getHalf2() == piece.getHalf1() || corner.piece.getHalf2() == piece.getHalf2()){
+                if (corner.piece.getHalf2() == piece.getHalf1() || corner.piece.getHalf2() == piece.getHalf2()) {
                     result.add(Side.DOWN);
                 }
             }

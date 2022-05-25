@@ -14,7 +14,10 @@ public class Bot extends Player{
     public Domino[] play(LinkedList<Domino> corners) {
         for (Domino dm : this.hand){
             for (Domino corner : corners){
-                if (corner.canConnect(dm) != null) return new Domino[]{dm, corner};
+                if (corner.canConnect(dm) != null) {
+                    Domino[] arr = new Domino[]{this.givePiece(dm.getHalf1(), dm.getHalf2()), corner};
+                    return arr;
+                }
             }
         }
 

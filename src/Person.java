@@ -27,9 +27,14 @@ public class Person extends Player{
         Domino pieceToPlay = new Piece(Integer.parseInt(toPlaySplit[0]), Integer.parseInt(toPlaySplit[1]));
         Domino pieceCorner = new Piece(Integer.parseInt(cornerSplit[0]), Integer.parseInt(cornerSplit[1]));
 
+        if (!this.canPlay(pieceToPlay)) {
+            System.out.println("Peca introduzida nao existe na sua mao");
+            return null;
+        }
+
         if (this.hasPiece(pieceToPlay) && this.existsCorner(corners, pieceCorner)) {
             if (pieceCorner.canConnect(pieceToPlay) != null){
-                return new Domino[]{pieceToPlay, pieceCorner};
+                return new Domino[]{this.givePiece(pieceToPlay.getHalf1(), pieceToPlay.getHalf2()), pieceCorner};
             }
         }
         return null;
