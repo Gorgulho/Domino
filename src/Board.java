@@ -81,14 +81,14 @@ public class Board {
         Node c = getNode(corner);
         if (c == null) return;
 
-        List<Side> sides = c.piece.canConnect(piece);
+        List<Side> sides = this.canConectNode(piece, c);
 
         if (sides == null) return;
 
         Node newPiece = new Node(piece);
 
-        for (Side s: sides) {  //TODO: still need to implement the coordinates for the print
-            if (c.left == null && s == Side.LEFT){
+        for (Side s : sides) {
+            if (c.left == null && s == Side.LEFT) {
                 assert c.piece.isPair() || !c.piece.isRotated();
 
                 if (newPiece.piece.isPair()) newPiece.piece.rotate();
@@ -97,7 +97,7 @@ public class Board {
                 c.left = newPiece;
                 newPiece.right = c;
 
-                if (!c.piece.isRotated()){
+                if (!c.piece.isRotated()) {
                     if (newPiece.piece.isRotated()) newPiece.piece.setXY(c.piece.getX() - 2, c.piece.getY());
                     else newPiece.piece.setXY(c.piece.getX() - 3, c.piece.getY());
                 } else {
@@ -105,7 +105,7 @@ public class Board {
                 }
 
                 break;
-            }else if (c.up == null && s == Side.UP) {
+            } else if (c.up == null && s == Side.UP) {
                 assert c.piece.isPair() || c.piece.isRotated();
 
                 if (!newPiece.piece.isPair()) newPiece.piece.rotate();
@@ -115,7 +115,7 @@ public class Board {
                 c.up = newPiece;
                 newPiece.down = c;
 
-                if (!c.piece.isRotated()){
+                if (!c.piece.isRotated()) {
                     newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 2);
                 } else {
                     if (newPiece.piece.isRotated()) newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 3);
@@ -123,7 +123,7 @@ public class Board {
                 }
 
                 break;
-            } else if (c.right == null && s == Side.RIGHT){
+            } else if (c.right == null && s == Side.RIGHT) {
                 assert c.piece.isPair() || !c.piece.isRotated();
 
                 if (newPiece.piece.isPair()) newPiece.piece.rotate();
@@ -132,7 +132,7 @@ public class Board {
                 c.right = newPiece;
                 newPiece.left = c;
 
-                if (!c.piece.isRotated()){
+                if (!c.piece.isRotated()) {
                     if (newPiece.piece.isRotated()) newPiece.piece.setXY(c.piece.getX() + 2, c.piece.getY());
                     else newPiece.piece.setXY(c.piece.getX() + 3, c.piece.getY());
                 } else {
@@ -150,11 +150,11 @@ public class Board {
                 c.down = newPiece;
                 newPiece.up = c;
 
-                if (!c.piece.isRotated()){
-                    newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 2);
+                if (!c.piece.isRotated()) {
+                    newPiece.piece.setXY(c.piece.getX(), c.piece.getY() + 2);
                 } else {
-                    if (newPiece.piece.isRotated()) newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 3);
-                    else newPiece.piece.setXY(c.piece.getX(), c.piece.getY() - 2);
+                    if (newPiece.piece.isRotated()) newPiece.piece.setXY(c.piece.getX(), c.piece.getY() + 3);
+                    else newPiece.piece.setXY(c.piece.getX(), c.piece.getY() + 2);
                 }
 
                 break;
@@ -168,21 +168,21 @@ public class Board {
         updateMinMaxCoordinates(newPiece);
     }
 
-    private void updateMinMaxCoordinates(Node no){
+    private void updateMinMaxCoordinates(Node no) {
         int x = no.piece.getX();
         int y = no.piece.getY();
 
-        if (x < this.xMin) this.xMin = x - 1;
-        if (x > this.xMax) this.xMax = x + 1;
+        if (x <= this.xMin) this.xMin = x - 2;
+        if (x >= this.xMax) this.xMax = x + 2;
 
-        if (y < this.yMin) this.yMin = y - 1;
-        if (y > this.yMax) this.yMax = y + 1;
+        if (y <= this.yMin) this.yMin = y - 2;
+        if (y >= this.yMax) this.yMax = y + 2;
     }
 
     public void boardState() {
-        String[][] result = new String[this.yMax + Math.abs(this.yMin)][this.xMax + Math.abs(this.xMin)];
+        String[][] result = new String[this.yMax + Math.abs(this.yMin) ][this.xMax + Math.abs(this.xMin) ];
 
-        for (Domino dm : this.dominos){
+        for (Domino dm : this.dominos) {
             if (dm.isRotated()) {
                 result[dm.getY() + Math.abs(this.yMin) - 1][dm.getX() + Math.abs(this.xMin)] = String.valueOf(dm.getHalf1());
                 result[dm.getY() + Math.abs(this.yMin)][dm.getX() + Math.abs(this.xMin)] = "-";
@@ -194,8 +194,8 @@ public class Board {
             }
         }
 
-        for (int i = 0; i < this.yMax + Math.abs(this.yMin); i++){
-            for (int j = 0; j < this.xMax + Math.abs(this.xMin); j++){
+        for (int i = 0; i < this.yMax + Math.abs(this.yMin); i++) {
+            for (int j = 0; j < this.xMax + Math.abs(this.xMin); j++) {
                 if (result[i][j] == null) System.out.print(' ');
                 else System.out.print(result[i][j]);
             }
@@ -204,20 +204,57 @@ public class Board {
 
     }
 
+    public LinkedList<Domino> getCornersDomino() {
+        LinkedList<Domino> result = new LinkedList<>();
+        for (Node n : this.corners) {
+            result.add(n.piece);
+        }
+        return result;
+    }
+
+    public List<Side> canConectNode(Domino piece, Domino corner){
+        Node c = this.getNode(corner);
+        List<Side> result = this.canConectNode(piece, c);
+        this.corners.add(c);
+        return result;
+    }
+
+    public List<Side> canConectNode(Domino piece, Node corner) {
+        List<Side> sidesCorner = corner.piece.canConnect(piece);
+
+        List<Side> result = new ArrayList<>();
+        if (sidesCorner.size() == 0) return null;
+
+        for (Side s : sidesCorner) {
+            if (corner.left == null && s == Side.LEFT) {
+                if (piece.isPair() && piece.getHalf1() == corner.piece.getHalf1()) {
+                    result.add(Side.LEFT);
+                } else if ((!piece.isPair() || corner.piece.isRotated()) && (piece.getHalf1() == corner.piece.getHalf1() || piece.getHalf2() == corner.piece.getHalf1())) {
+                    result.add(Side.LEFT);
+                }
+            } else if (corner.up == null && s == Side.UP) {
+                if (corner.piece.getHalf1() == piece.getHalf1() || corner.piece.getHalf1() == piece.getHalf2()){
+                    result.add(Side.UP);
+                }
+            } else if (corner.right == null && s == Side.RIGHT) {
+                if (piece.isPair() && piece.getHalf1() == corner.piece.getHalf2()) {
+                    result.add(Side.RIGHT);
+                } else if ((!piece.isPair() || corner.piece.isRotated()) && (piece.getHalf1() == corner.piece.getHalf2() || piece.getHalf2() == corner.piece.getHalf2())) {
+                    result.add(Side.RIGHT);
+                }
+            } else if (corner.down == null && s == Side.DOWN) {
+                if (corner.piece.getHalf2() == piece.getHalf1() || corner.piece.getHalf2() == piece.getHalf2()){
+                    result.add(Side.DOWN);
+                }
+            }
+        }
+
+        return result;
+    }
+
     /**
      * @return
      */
-
-
-    public Iterable<Domino> leftSide() {
-        LinkedList<Domino> itr = new LinkedList<>();
-        sideListGenerator();
-        return itr;
-    }
-
-    private void sideListGenerator() {
-
-    }
 
     private Node getNode(Domino dm) {
         int i = 0;
@@ -226,16 +263,5 @@ public class Board {
             else i++;
         }
         return null;
-    }
-
-    public Iterable<Domino> oQueTuQuiseres(Node n) {
-        LinkedList<Domino> dominos = new LinkedList<>();
-        oQueTuQuiseres(n, dominos);
-        return dominos;
-    }
-
-    private void oQueTuQuiseres(Node n, LinkedList<Domino> list) {
-        if (n.left != null) oQueTuQuiseres(n.left, list);
-        list.add(n.piece);
     }
 }

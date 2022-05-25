@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class Client {
@@ -35,19 +36,29 @@ public class Client {
 
         int playerIndice = findSixSix(players);
 
-        Board b = new Board(players[playerIndice].givePiece(6, 6), 56, 84);
-
-        /*for(Player p : players){
-            System.out.println(p.getHand() + p.getClass().getName());
-        }*/
+        Board b = new Board(players[playerIndice++].givePiece(6, 6), 56, 84);
 
 
+        Domino[] piecesToPlay;
 
+        while (players[0].hasPieces() && players[1].hasPieces() && players[2].hasPieces() && players[3].hasPieces()){
+            if (playerIndice == 4) playerIndice = 0;
+            if (playerIndice == 3) {
+                b.boardState();
+                System.out.println(players[playerIndice].getHand());
+            }
+            piecesToPlay = players[playerIndice].play(b.getCornersDomino());
+            if (piecesToPlay != null) {
+                List<Side> test = b.canConectNode(piecesToPlay[0], piecesToPlay[1]);
+                if (test.size() != 0) b.addDominoToCorner(players[playerIndice].givePiece(piecesToPlay[0].getHalf1(), piecesToPlay[0].getHalf2()), piecesToPlay[1]);
+            }
+            playerIndice++;
+        }
         b.boardState();
-        b.addDominoToCorner(new Piece(6, 4), new Pair(6));
-        b.boardState();
-        b.addDominoToCorner(new Piece(4, 5), new Piece(4, 6));
-        b.boardState();
+
+        for (Player p : players){
+            System.out.println(p.getHand());
+        }
 
 
     }

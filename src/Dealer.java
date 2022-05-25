@@ -9,9 +9,9 @@ public class Dealer {
     public Dealer(LinkedList <Domino> allDominos){
         this.allDominos = allDominos;
         //setDominos();
-        for (Domino dm : allDominos){
+        /*for (Domino dm : allDominos){
             System.out.println(dm.getClass().getName() + dm);
-        }
+        }*/
     }
 
 

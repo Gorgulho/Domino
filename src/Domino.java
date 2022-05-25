@@ -81,7 +81,7 @@ public abstract class Domino implements Comparable<Domino>{
      */
     @Override
     public String toString() {
-        return "<" + this.half1 + "|" + this.half2 + ">" + this.isRotated();
+        return "<" + this.half1 + "|" + this.half2 + ">";
     }
 
 

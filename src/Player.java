@@ -67,5 +67,5 @@ public abstract class Player {
         return null;
     }
 
-    public abstract void play();
+    public abstract Domino[] play(LinkedList<Domino> corners);
 }
