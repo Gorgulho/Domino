@@ -5,13 +5,18 @@ import java.util.Scanner;
 public class Person extends Player{
 
     /**
-     *
+     * Sets the player's hand and initializes the player's points as 0
      * @param hand - LinkedList with the 7 Dominos for the Person to use
      */
     public Person(LinkedList<Domino> hand){
         super(hand);
     }
 
+    /**
+     *
+     * @param corners list of dominoes that are "open" to play
+     * @return array of dominoes containing the domino connected and the corner domino being connected to, null if play isn't valid
+     */
     @Override
     public Domino[] play(LinkedList<Domino> corners) {
         Scanner sc = new Scanner(System.in);
@@ -40,6 +45,12 @@ public class Person extends Player{
         return null;
     }
 
+    /**
+     *
+     * @param corners linked list of dominoes
+     * @param corner  domino being searched for
+     * @return true if linked list contains 'corner', otherwise false
+     */
     private boolean existsCorner(LinkedList<Domino> corners, Domino corner){
         for (Domino dm : corners){
             if (dm.compareTo(corner) > 0) return true;
