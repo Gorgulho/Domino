@@ -197,7 +197,7 @@ public class Board {
         return canPlace;
     }
 
-    public boolean calculateColision(Domino piece) {
+    private boolean calculateColision(Domino piece) {
         if(piece.isRotated()){
             if(Math.abs(piece.getX()) > width/2 || Math.abs(piece.getY())+1 > height/2) return true;
         }
