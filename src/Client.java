@@ -65,7 +65,7 @@ public class Client {
 
         Player[] podium = getPodium(players, pIndex);
 
-        System.out.println("Primeiro - Vencedor" + podium[0]);
+        System.out.println("Primeiro - Vencedor " + podium[0]);
         System.out.println("Segundo " + podium[1]);
         System.out.println("Terceiro " + podium[2]);
         System.out.println("Quarto " + podium[3]);

@@ -108,6 +108,6 @@ public abstract class Player {
      */
     @Override
     public String toString() {
-        return this.getClass().getName() + " com " + this.points + "pontos!";
+        return this.getClass().getName() + " com " + this.points + " pontos!";
     }
 }
