@@ -95,8 +95,8 @@ public class Client {
         players[0] = new Bot(hands[0]);      //bot
         players[1] = new Bot(hands[1]);      //bot
         players[2] = new Bot(hands[2]);      //bot
-        players[3] = new Person(hands[3]);   //person
-
+        //players[3] = new Person(hands[3]);   //person
+        players[3] = new Bot(hands[3]);
         int playerIndice = findSixSix(players);
 
         //Board creation
@@ -109,11 +109,11 @@ public class Client {
         //where all the players will play, stops the play if one player gets out of pieces or the board has no more possible corners
         while (players[0].hasPieces() && players[1].hasPieces() && players[2].hasPieces() && players[3].hasPieces() && b.getCornersDomino().size() != 0) {
             if (playerIndice == 4) playerIndice = 0;
-            if (playerIndice == 3) {
+            if (players[playerIndice] instanceof Person) {
                 b.boardState();
                 System.out.println(players[playerIndice].getHand());
             }
-            if (playerIndice == 3) {
+            if (players[playerIndice] instanceof Person) {
                 piecesToPlay = players[playerIndice].play(b.getCornersDomino());
                 if (piecesToPlay != null) {
 

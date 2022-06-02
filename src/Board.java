@@ -255,11 +255,11 @@ public class Board {
         int x = no.piece.getX();
         int y = no.piece.getY();
 
-        if (x <= this.xMin) this.xMin = x - 2;
-        if (x >= this.xMax) this.xMax = x + 2;
+        if (x <= this.xMin) this.xMin = x - 6;
+        if (x >= this.xMax) this.xMax = x + 6;
 
-        if (y <= this.yMin) this.yMin = y - 2;
-        if (y >= this.yMax) this.yMax = y + 2;
+        if (y <= this.yMin) this.yMin = y - 6;
+        if (y >= this.yMax) this.yMax = y + 6;
     }
 
     /**
